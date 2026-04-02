@@ -3,6 +3,16 @@ class FinancialRecordsController < ApplicationController
 
 	def index
 		@records = FinancialRecord.all
+
+		# filter by record_type
+    @records = FinancialRecord.where(record_type: params[:record_type]) if params[:record_type]
+
+    # filter by category
+    @records = FinancialRecord.where(category: params[:category]) if params[:category]
+
+    # filter by date
+    @records = FinancialRecord.where(date: params[:start_date]..params[:end_date]) if params[:start_date] && params[:end_date]
+
 		render json: @records
 	end
 
