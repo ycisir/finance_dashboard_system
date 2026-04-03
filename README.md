@@ -6,7 +6,7 @@ The system supports user management, transaction tracking, and summary analytics
 * User management (Admin only)
 * Financial records CRUD (income & expense)
 * Role-based access control (Viewer, Analyst, Admin)
-* Dashboard summary (income, expense, balance, category totals)
+* Dashboard summary (income, expense, balance, category totals, trends, recent activity)
 * Filtering (by date, category, record type)
 * Input validation and structured error handling
 
@@ -23,6 +23,19 @@ The system supports user management, transaction tracking, and summary analytics
 | Analyst | View records + summaries      |
 | Admin   | Full access (users + records) |
 
+### Mocked Users and Roles
+For local testing, the app uses mocked users. By default, `current_user` is set to the first user
+
+To test different roles, Use the Rails console:
+`rails c`
+
+In the console:
+```bash
+user = User.first         # select the first user
+user.admin!               # make the user an admin
+user.analyst!             # make the user an analyst
+user.viewer!              # make the user a viewer
+```
 
 ### API Endpoints
 
@@ -51,14 +64,15 @@ The system supports user management, transaction tracking, and summary analytics
 git https://github.com/ycisir/finance_dashboard_system.git
 cd finance_dashboard_system
 bundle install
-rails db:create db:migrate
+rails db:drop db:create db:migrate db:seed
 rails s
 ```
+Server runs at `http://127.0.0.1:3000/`
 
 ### Testing
 
 ```bash
-rails test
+rails t
 ```
 
 ### Assumptions
