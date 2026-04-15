@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     render json: {
-      message: "Finance Dashboard System Endpoints",
+      message: "Financial Dashboard API",
       endpoints: {
         users: {
           list: "/users",

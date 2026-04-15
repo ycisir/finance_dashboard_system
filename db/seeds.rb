@@ -9,4 +9,4 @@
 #   end
 
 
-user = User.create(name: "Test User", email: "test@example.com", role: "admin", status: "active")
+user = User.create(name: "Jack Sparrow", email: "jack@example.com", role: "admin", status: "active")
