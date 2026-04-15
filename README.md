@@ -1,88 +1,86 @@
-# Finance Dashboard System
-A Ruby on Rails API for managing financial records with role-based access control.
-The system supports user management, transaction tracking, and summary analytics for a finance dashboard.
+# Financial Dashboard API
 
-### Features
-* User management (Admin only)
-* Financial records CRUD (income & expense)
-* Role-based access control (Viewer, Analyst, Admin)
-* Dashboard summary (income, expense, balance, category totals, trends, recent activity)
-* Filtering (by date, category, record type)
-* Input validation and structured error handling
+A **Ruby on Rails API** for managing financial data with **role-based access control (RBAC)**.
+Designed to demonstrate clean architecture, RESTful design, and analytics-focused backend development.
 
+### Key Features
+* Role-based access (**Viewer, Analyst, Admin**)
+* User management (Admin-only)
+* Financial records CRUD (income & expenses)
+* Dashboard analytics (totals, balance, trends)
+* Filtering by date, category, and type
+* Input validation & structured error handling
 
 ### Tech Stack
-* Ruby on Rails (API)
+* Ruby on Rails (API mode)
 * SQLite
+* RESTful architecture
 
-### Roles & Permissions
-
-| Role    | Access                        |
+### Roles
+| Role    | Permissions                   |
 | ------- | ----------------------------- |
-| Viewer  | View records                  |
-| Analyst | View records + summaries      |
-| Admin   | Full access (users + records) |
+| Viewer  | Read financial records        |
+| Analyst | Read + access analytics       |
+| Admin   | Full access (users & records) |
 
-### Mocked Users and Roles
-For local testing, the app uses mocked users. By default, `current_user` is set to the first user
-
-To test different roles, Use the Rails console:
-`rails c`
-
-In the console:
-```bash
-user = User.first         # select the first user
-user.admin!               # make the user an admin
-user.analyst!             # make the user an analyst
-user.viewer!              # make the user a viewer
-```
-
-### API Endpoints
-
-#### Users
+### API Overview
+**Users**
 * POST `/users`
 * GET `/users`
 * PATCH `/users/:id`
 * PATCH `/users/:id/status`
 
-#### Financial Records
+**Financial Records**
 * POST `/financial_records`
 * GET `/financial_records`
 * PATCH `/financial_records/:id`
 * DELETE `/financial_records/:id`
 
-#### Dashboard
+**Dashboard**
 * GET `/financial_records/summary`
 
-#### Filtering
-* `/financial_records?record_type=income`
-* `/financial_records?category=bills`
-* `/financial_records?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
+### Quick Start
 
-### Setup
 ```bash
-git https://github.com/ycisir/finance_dashboard_system.git
-cd finance_dashboard_system
+# clone the repository
+git clone https://github.com/ycisir/financial_dashboard.git
+
+# move to project directory
+cd financial_dashboard
+
+# rename env file
+mv .env.example .env
+
+# install dependencies
 bundle install
-rails db:drop db:create db:migrate db:seed
+
+# create and migrate db
+rails db:prepare
+
+# run tests
+rails t
+
+# start dev server
 rails s
 ```
-Server runs at `http://127.0.0.1:3000/`
+Server runs at `http://127.0.0.1:3000`
 
-### Testing
-
+### Testing Roles
 ```bash
-rails t
+rails c
+```
+```ruby
+user = User.first
+user.admin!    # or analyst! / viewer!
 ```
 
-### Assumptions
-* Authentication is mocked using `current_user`
-* Single-user simulation for testing
-* SQLite used for simplicity
+### Notes
+* Uses mocked authentication (`current_user`)
+* SQLite for simplicity and quick setup
+* Optimized for demo and development use
 
-### Improvements
-* Authentication
-* Pagination and search
-* API documentation
-* Rate limiting
-* Soft delete functionality
+### Future Enhancements
+* JWT authentication
+* Pagination & search
+* API documentation (Swagger)
+* Production-ready DB (PostgreSQL)
